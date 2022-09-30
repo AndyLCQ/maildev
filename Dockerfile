@@ -1,9 +1,8 @@
 # Base
-FROM nodejs:16
+FROM registry.access.redhat.com/ubi8/nodejs-16
 ENV NODE_ENV production
 
 # Build
-FROM nodejs:16
 WORKDIR /root
 COPY package*.json ./
 RUN npm install \
@@ -11,11 +10,10 @@ RUN npm install \
   && npm cache clean --force
 
 # Prod
-FROM nodejs:16
 USER node
 WORKDIR /home/node
 COPY --chown=node:node . /home/node
-COPY --chown=node:node --from=build /root/node_modules /home/node/node_modules
+COPY --chown=node:node /root/node_modules /home/node/node_modules
 EXPOSE 1080 1025
 ENV MAILDEV_WEB_PORT 1080
 ENV MAILDEV_SMTP_PORT 1025
