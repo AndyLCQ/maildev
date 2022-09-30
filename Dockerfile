@@ -4,7 +4,6 @@ ENV NODE_ENV production
 
 # Prod
 USER 1001
-WORKDIR /home/node
 COPY package*.json ./
 RUN npm install \
   && npm prune \
