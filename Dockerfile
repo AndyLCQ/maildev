@@ -1,9 +1,9 @@
 # Base
-FROM node:16-alpine as base
+FROM nodejs:16
 ENV NODE_ENV production
 
 # Build
-FROM base as build
+FROM nodejs:16
 WORKDIR /root
 COPY package*.json ./
 RUN npm install \
@@ -11,7 +11,7 @@ RUN npm install \
   && npm cache clean --force
 
 # Prod
-FROM base as prod
+FROM nodejs:16
 USER node
 WORKDIR /home/node
 COPY --chown=node:node . /home/node
