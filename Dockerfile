@@ -2,20 +2,13 @@
 FROM registry.access.redhat.com/ubi8/nodejs-16
 ENV NODE_ENV production
 
-USER root
-
-# Build
-WORKDIR /root
+# Prod
+USER 1001
+WORKDIR /home/node
 COPY package*.json ./
 RUN npm install \
   && npm prune \
   && npm cache clean --force
-
-# Prod
-USER 1001
-WORKDIR /home/node
-COPY --chown=node:node . /home/node
-COPY --chown=node:node /root/node_modules /home/node/node_modules
 EXPOSE 1080 1025
 ENV MAILDEV_WEB_PORT 1080
 ENV MAILDEV_SMTP_PORT 1025
