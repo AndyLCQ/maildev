@@ -2,6 +2,8 @@
 FROM registry.access.redhat.com/ubi8/nodejs-16
 ENV NODE_ENV production
 
+USER root
+
 # Build
 WORKDIR /root
 COPY package*.json ./
@@ -10,7 +12,7 @@ RUN npm install \
   && npm cache clean --force
 
 # Prod
-USER node
+USER 1001
 WORKDIR /home/node
 COPY --chown=node:node . /home/node
 COPY --chown=node:node /root/node_modules /home/node/node_modules
