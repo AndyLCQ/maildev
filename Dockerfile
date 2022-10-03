@@ -8,6 +8,9 @@ COPY package*.json ./
 RUN npm install \
   && npm prune \
   && npm cache clean --force
+
+COPY . /opt/app-root/src
+  
 EXPOSE 1080 1025
 ENV MAILDEV_WEB_PORT 1080
 ENV MAILDEV_SMTP_PORT 1025
